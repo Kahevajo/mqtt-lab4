@@ -61,50 +61,23 @@ app.initialize = function () {
 app.onReady = function () {
   if (!app.ready) {
     app.color = app.generateColor(app.uuid) // Generate our own color from UUID
-    app.pubTopic = 'paint/' + app.uuid + '/evt' // We publish to our own device topic
-    app.subTopic = 'paint/+/evt' // We subscribe to all devices using "+" wildcard
-    app.setupCanvas()
+    app.pubTopic = 'batman/' + app.uuid + '/evt' // We publish to our own device topic
+    app.subTopic = 'batman/+/evt' // We subscribe to all devices using "+" wildcard
+    app.setupChat()
     app.setupConnection()
     app.ready = true
   }
 }
 
-app.setupCanvas = function () {
-  var canvas = document.getElementById('canvas')
-  app.ctx = canvas.getContext('2d')
-  var totalOffsetX = 0
-  var totalOffsetY = 0
-  var curElement = canvas
-  do {
-    totalOffsetX += curElement.offsetLeft
-    totalOffsetY += curElement.offsetTop
-  } while (curElement = curElement.offsetParent)
-  app.left = totalOffsetX
-  app.top = totalOffsetY
-
-  // We want to remember the beginning of the touch as app.pos
-  canvas.addEventListener('touchstart', function (event) {
-    // Found the following hack to make sure some
-    // Androids produce continuous touchmove events.
-    if (navigator.userAgent.match(/Android/i)) {
-      event.preventDefault()
-    }
-    var t = event.touches[0]
-    var x = Math.floor(t.clientX) - app.left
-    var y = Math.floor(t.clientY) - app.top
-    app.pos = {x: x, y: y}
-  })
-
-  // Then we publish a line from-to with our color and remember our app.pos
-  canvas.addEventListener('touchmove', function (event) {
-    var t = event.touches[0]
-    var x = Math.floor(t.clientX) - app.left
-    var y = Math.floor(t.clientY) - app.top
+app.setupChat = function () {
+  var sendmessage = document.getElementById('sendmessage');
+  sendmessage.addEventListener('click', function (event) {
     if (app.connected) {
-      var msg = JSON.stringify({from: app.pos, to: {x: x, y: y}, color: app.color})
+      var usermessage = document.getElementById('usermessage');
+      var msg = JSON.stringify({
+        name: "anonymous", message: usermessage.value})
       app.publish(msg)
     }
-    app.pos = {x: x, y: y}
   })
 }
 
@@ -125,6 +98,7 @@ app.publish = function (json) {
   var message = new Paho.MQTT.Message(json)
   message.destinationName = app.pubTopic
   app.client.send(message)
+  console.log("Published message: " + message);
 }
 
 app.subscribe = function () {
@@ -138,12 +112,14 @@ app.unsubscribe = function () {
 }
 
 app.onMessageArrived = function (message) {
+  // here put message in new div as child
+  console.log("Received json: " + message);
   var o = JSON.parse(message.payloadString)
-  app.ctx.beginPath()
-  app.ctx.moveTo(o.from.x, o.from.y)
-  app.ctx.lineTo(o.to.x, o.to.y)
-  app.ctx.strokeStyle = o.color
-  app.ctx.stroke()
+  var mess = document.createElement("div");
+  mess.innerHTML = o.name + ": " + o.message;
+  var chatbox = document.getElementById("chatbox");
+  chatbox.append(mess);
+  console.log("Appended: " + mess);
 }
 
 app.onConnect = function (context) {

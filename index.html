@@ -50,23 +50,13 @@
 	</p>
 
 	<div class="dummy"></div>
-	<div class="canvas-container"><canvas id="canvas" style="margin: 0px;"></canvas></div>
-
-	<script>
-		// Make the canvas fill the part of the screen that's not taken up by other elements.
-		console.log("loading...");
-		window.blockMenuHeaderScroll = true;
-		document.body.style.overflow = "hidden";
-		document.onreadystatechange = function () {
-			if (document.readyState == "complete") {
-				var canvas = document.getElementById("canvas");
-				canvas.width = canvas.parentElement.clientWidth;
-				canvas.height = canvas.parentElement.clientHeight;
-				console.log("onload: "+canvas.width+"x"+canvas.height);
-			}
-		};
-	</script>
-
+	<div class="chatroom-container">
+		<div id="chatbox"></div>
+		<form action="">
+			<input id="usermessage" name="usermessage" type="text">
+			<input id="sendmessage" name="sendmessage" type="submit">
+		</form>
+	</div>
 	<script src="libs/mqttws/mqttws.js"></script>
 	</body>
 </html>
