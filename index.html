@@ -7,22 +7,11 @@
 
 	<title>EMQTT Painter</title>
 
-	<style>
-		@import 'ui/css/evothings-app.css';
-		body
-		{
-				display:table;
-				overflow:hidden;
-		}
-		div
-		{
-				display:table-row;
-		}
-		div+ div
-		{
-				height:100%;
-		}
-	</style>
+	<!-- Bootstrap --> 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="style.css"/>
+
 
 	<script>
 	// Redirect console.log to Evothings Workbench.
@@ -35,30 +24,32 @@
 </head>
 
 <body ontouchstart=""><!-- ontouchstart="" enables low-delay CSS transitions. -->
+	<button class="back" onclick="history.back()"><span class="glyphicon glyphicon-menu-left">Back</span></button>
 	<header>
-		<button class="back" onclick="history.back()">
-			<img src="ui/images/arrow-left.svg">
-		</button>
-		<img class="logotype" src="ui/images/logo.svg" alt="Evothings">
+		<h1>ChatApp</h1>
+		<input id="nickName" name="nickName" type="text" placeholder="Change nickname">
+
 	</header>
 
-	<h1>Chaterino</h1>
 
-	<p>
+	<div class="connection">
 		<span id="info">Not Connected</span>
 		<button id="connect" onclick="app.setupConnection();">Reconnect</button>
-	</p>
+	</div>
 
 	<div class="dummy"></div>
 	<div class="chatroom-container">
-		<div id="chatbox"></div>
-		<form id="form" action="">
-			<input id="usermessage" name="usermessage" type="text">
-			<input id="sendmessage" name="sendmessage" type="button" value="Send">
-		</form>
-		<form id="nickname" action="">
-			<input id="nickName" name="nickName" type="text" placeholder="Change nickname">
-		</form>
+		<div id="chatbox">
+			<div>Matilda: Hello</div>
+			<div>Matilda: Hello</div>
+			<div>Matilda: Hello</div>
+			<div>Matilda: Hello</div>
+			<div>Matilda: Hello</div>
+			<div>Matilda: Hello</div>
+
+		</div>
+		<input id="usermessage" name="usermessage" type="text" placeholder="Send a message...">
+		<button id="sendmessage" name="sendmessage" >Send <span class="glyphicon glyphicon-send"></span></button>
 	</div>
 	<script src="libs/mqttws/mqttws.js"></script>
 	<script src="libs/jquery/jquery.js"></script>

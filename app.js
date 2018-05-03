@@ -83,6 +83,7 @@ app.setupChat = function () {
       var msg = JSON.stringify({
         name: app.nickName, message: usermessage.value})
       app.publish(msg)
+      document.getElementById('usermessage').value = '';
     }
   })
 }
@@ -120,19 +121,22 @@ app.unsubscribe = function () {
 app.onMessageArrived = function (message) {
   // here put message in new div as child
   console.log("Received json: " + message)
+  console.log(app.color + "app color")
 
   var o = JSON.parse(message.payloadString)
 
   if(o.message.includes('@' + app.nickName)) {
-    var mess = document.createElement("div")
-    mess.innerHTML = o.name + ": " + o.message
+    var message = document.createElement("div")
+    message.innerHTML = o.name + ": " + o.message
+    message.style.color = app.color;
     app.chatbox.appendChild(mess)
     console.log("Appended: " + mess.innerHTML)
   } else if(!o.message.includes('@')) {
-    var mess = document.createElement("div")
-    mess.innerHTML = o.name + ": " + o.message
-    app.chatbox.appendChild(mess)
-    console.log("Appended: " + mess.innerHTML)
+    var message = document.createElement("div")
+    message.innerHTML = o.name + ": " + o.message
+    message.style.color = app.color;
+    app.chatbox.appendChild(message)
+    console.log("Appended: " + message.innerHTML)
   }
 
 }

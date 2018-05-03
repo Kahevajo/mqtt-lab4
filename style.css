@@ -1,0 +1,55 @@
+body{
+background: rgb(0, 191, 255);
+font-family: Futura;
+font-size: 20px;
+padding: 2vw;
+}
+
+input{
+border: 0px;
+border-radius: 3px;
+background: #FFF;
+width: 68vw;
+margin-right: 2vw;
+}
+
+#nickName{
+text-align: center;
+}
+
+button{
+border: 0px;
+border-radius: 3px;
+background: #FFF;
+color: rgb(0, 191, 255);
+padding: 5px;
+width: 24vw;
+
+}
+
+header{
+text-align: center;
+margin-bottom: 10vh;
+}
+
+.back{
+font-family: Futura;
+}
+
+#chatbox{
+border-radius: 3px;
+background: #FFF;
+padding: 10px;
+margin-top: 10px;
+margin-bottom: 10px;
+border: 1px solid #FFF;
+font-size: 20px;
+height: 20vh;
+width: 100%;
+overflow-y: scroll;
+}
+
+.connection{
+display: none;
+}
+
