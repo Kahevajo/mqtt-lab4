@@ -3,6 +3,10 @@
   "plugins": [],
   "libraries": [
     {
+      "name": "jquery",
+      "version": "2.1.1"
+    },
+    {
       "name": "mqttws",
       "version": "3.1"
     }

@@ -14,6 +14,8 @@ app.ready = false
 
 app.uuid = getUUID()
 
+app.nickName = "anon"
+
 function getUUID () {
   if (window.isCordovaApp) {
     var uuid = device.uuid
@@ -52,6 +54,7 @@ app.generateColor = function (uuid) {
 }
 
 app.initialize = function () {
+  console.log("init")
   document.addEventListener(
     'deviceready',
     app.onReady,
@@ -65,17 +68,20 @@ app.onReady = function () {
     app.subTopic = 'batman/+/evt' // We subscribe to all devices using "+" wildcard
     app.setupChat()
     app.setupConnection()
+    app.setNickname()
     app.ready = true
   }
 }
 
 app.setupChat = function () {
-  var sendmessage = document.getElementById('sendmessage');
+  var chatbox = document.getElementById("chatbox")
+  app.chatbox = chatbox
+  var sendmessage = document.getElementById('sendmessage')
   sendmessage.addEventListener('click', function (event) {
     if (app.connected) {
-      var usermessage = document.getElementById('usermessage');
+      var usermessage = document.getElementById('usermessage')
       var msg = JSON.stringify({
-        name: "anonymous", message: usermessage.value})
+        name: app.nickName, message: usermessage.value})
       app.publish(msg)
     }
   })
@@ -98,7 +104,7 @@ app.publish = function (json) {
   var message = new Paho.MQTT.Message(json)
   message.destinationName = app.pubTopic
   app.client.send(message)
-  console.log("Published message: " + message);
+  console.log("Published message: " + message)
 }
 
 app.subscribe = function () {
@@ -113,13 +119,22 @@ app.unsubscribe = function () {
 
 app.onMessageArrived = function (message) {
   // here put message in new div as child
-  console.log("Received json: " + message);
+  console.log("Received json: " + message)
+
   var o = JSON.parse(message.payloadString)
-  var mess = document.createElement("div");
-  mess.innerHTML = o.name + ": " + o.message;
-  var chatbox = document.getElementById("chatbox");
-  chatbox.append(mess);
-  console.log("Appended: " + mess);
+
+  if(o.message.includes('@' + app.nickName)) {
+    var mess = document.createElement("div")
+    mess.innerHTML = o.name + ": " + o.message
+    app.chatbox.appendChild(mess)
+    console.log("Appended: " + mess.innerHTML)
+  } else if(!o.message.includes('@')) {
+    var mess = document.createElement("div")
+    mess.innerHTML = o.name + ": " + o.message
+    app.chatbox.appendChild(mess)
+    console.log("Appended: " + mess.innerHTML)
+  }
+
 }
 
 app.onConnect = function (context) {
@@ -142,6 +157,15 @@ app.status = function (s) {
   console.log(s)
   var info = document.getElementById('info')
   info.innerHTML = s
+}
+
+app.setNickname = function () {
+  var nickName = document.getElementById("nickName")
+  nickName.addEventListener('change', function (event) {
+    if (app.connected) {
+      app.nickName = nickName.value
+    }
+  })
 }
 
 app.initialize()

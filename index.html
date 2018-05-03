@@ -42,7 +42,7 @@
 		<img class="logotype" src="ui/images/logo.svg" alt="Evothings">
 	</header>
 
-	<h1>MQTT Painter</h1>
+	<h1>Chaterino</h1>
 
 	<p>
 		<span id="info">Not Connected</span>
@@ -52,11 +52,15 @@
 	<div class="dummy"></div>
 	<div class="chatroom-container">
 		<div id="chatbox"></div>
-		<form action="">
+		<form id="form" action="">
 			<input id="usermessage" name="usermessage" type="text">
-			<input id="sendmessage" name="sendmessage" type="submit">
+			<input id="sendmessage" name="sendmessage" type="button" value="Send">
+		</form>
+		<form id="nickname" action="">
+			<input id="nickName" name="nickName" type="text" placeholder="Change nickname">
 		</form>
 	</div>
 	<script src="libs/mqttws/mqttws.js"></script>
+	<script src="libs/jquery/jquery.js"></script>
 	</body>
 </html>
