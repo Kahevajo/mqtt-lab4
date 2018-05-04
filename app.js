@@ -14,7 +14,7 @@ app.ready = false
 
 app.uuid = getUUID()
 
-app.nickName = "anon"
+app.nickName = "Anonymous"
 
 function getUUID () {
   if (window.isCordovaApp) {
@@ -81,7 +81,7 @@ app.setupChat = function () {
     if (app.connected) {
       var usermessage = document.getElementById('usermessage')
       var msg = JSON.stringify({
-        name: app.nickName, message: usermessage.value})
+        name: app.nickName, message: usermessage.value, color: app.color})
       app.publish(msg)
       document.getElementById('usermessage').value = '';
     }
@@ -128,13 +128,13 @@ app.onMessageArrived = function (message) {
   if(o.message.includes('@' + app.nickName)) {
     var message = document.createElement("div")
     message.innerHTML = o.name + ": " + o.message
-    message.style.color = app.color;
-    app.chatbox.appendChild(mess)
-    console.log("Appended: " + mess.innerHTML)
+    message.style.color = o.color;
+    app.chatbox.appendChild(message)
+    console.log("Appended: " + message.innerHTML)
   } else if(!o.message.includes('@')) {
     var message = document.createElement("div")
     message.innerHTML = o.name + ": " + o.message
-    message.style.color = app.color;
+    message.style.color = o.color;
     app.chatbox.appendChild(message)
     console.log("Appended: " + message.innerHTML)
   }

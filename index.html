@@ -27,7 +27,9 @@
 	<button class="back" onclick="history.back()"><span class="glyphicon glyphicon-menu-left">Back</span></button>
 	<header>
 		<h1>ChatApp</h1>
-		<input id="nickName" name="nickName" type="text" placeholder="Change nickname">
+		<form action="">
+			<input id="nickName" name="nickName" type="text" placeholder="Change nickname">
+		</form>
 
 	</header>
 
@@ -40,16 +42,11 @@
 	<div class="dummy"></div>
 	<div class="chatroom-container">
 		<div id="chatbox">
-			<div>Matilda: Hello</div>
-			<div>Matilda: Hello</div>
-			<div>Matilda: Hello</div>
-			<div>Matilda: Hello</div>
-			<div>Matilda: Hello</div>
-			<div>Matilda: Hello</div>
-
 		</div>
-		<input id="usermessage" name="usermessage" type="text" placeholder="Send a message...">
-		<button id="sendmessage" name="sendmessage" >Send <span class="glyphicon glyphicon-send"></span></button>
+		<form action="">
+			<input id="usermessage" name="usermessage" type="text" placeholder="Send a message...">
+			<input id="sendmessage" name="sendmessage" value="send" type="button"/>
+		</form>
 	</div>
 	<script src="libs/mqttws/mqttws.js"></script>
 	<script src="libs/jquery/jquery.js"></script>

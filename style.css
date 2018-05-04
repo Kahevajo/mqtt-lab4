@@ -10,7 +10,6 @@ border: 0px;
 border-radius: 3px;
 background: #FFF;
 width: 68vw;
-margin-right: 2vw;
 }
 
 #nickName{
@@ -24,7 +23,15 @@ background: #FFF;
 color: rgb(0, 191, 255);
 padding: 5px;
 width: 24vw;
+}
 
+#sendmessage{
+border: 0px;
+border-radius: 3px;
+background: #FFF;
+color: rgb(0, 191, 255);
+padding: 1vw;
+width: 26vw;
 }
 
 header{
